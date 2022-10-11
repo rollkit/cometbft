@@ -283,11 +283,15 @@ func (cli *socketClient) GetAppHashAsync(req types.RequestGetAppHash) *ReqRes {
 	return cli.queueRequest(types.ToRequestGetAppHash(req))
 }
 
-func (cli *socketClient) GenerateFraudProofAsync(req types.RequestGenerateFraudProof) *ReqRes {
+func (cli *socketClient) GenerateFraudProofAsync(
+	req types.RequestGenerateFraudProof,
+) *ReqRes {
 	return cli.queueRequest(types.ToRequestGenerateFraudProof(req))
 }
 
-func (cli *socketClient) TriggerFraudProofGenerationModeAsync(req types.RequestTriggerFraudProofGenerationMode) *ReqRes {
+func (cli *socketClient) TriggerFraudProofGenerationModeAsync(
+	req types.RequestTriggerFraudProofGenerationMode,
+) *ReqRes {
 	return cli.queueRequest(types.ToRequestTriggerFraudProofGenerationMode(req))
 }
 

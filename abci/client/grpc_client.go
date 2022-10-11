@@ -318,13 +318,19 @@ func (cli *grpcClient) GenerateFraudProofAsync(params types.RequestGenerateFraud
 	return cli.finishAsyncCall(req, &types.Response{Value: &types.Response_GenerateFraudProof{GenerateFraudProof: res}})
 }
 
-func (cli *grpcClient) TriggerFraudProofGenerationModeAsync(params types.RequestTriggerFraudProofGenerationMode) *ReqRes {
+func (cli *grpcClient) TriggerFraudProofGenerationModeAsync(
+	params types.RequestTriggerFraudProofGenerationMode,
+) *ReqRes {
 	req := types.ToRequestTriggerFraudProofGenerationMode(params)
-	res, err := cli.client.TriggerFraudProofGenerationMode(context.Background(), req.GetTriggerFraudProofGenerationMode(), grpc.WaitForReady(true))
+	res, err := cli.client.TriggerFraudProofGenerationMode(
+		context.Background(), req.GetTriggerFraudProofGenerationMode(), grpc.WaitForReady(true),
+	)
 	if err != nil {
 		cli.StopForError(err)
 	}
-	return cli.finishAsyncCall(req, &types.Response{Value: &types.Response_TriggerFraudProofGenerationMode{TriggerFraudProofGenerationMode: res}})
+	return cli.finishAsyncCall(
+		req, &types.Response{Value: &types.Response_TriggerFraudProofGenerationMode{TriggerFraudProofGenerationMode: res}},
+	)
 }
 
 // finishAsyncCall creates a ReqRes for an async call, and immediately populates it

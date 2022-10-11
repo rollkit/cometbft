@@ -22,7 +22,9 @@ type AppConnConsensus interface {
 	CommitSync() (*types.ResponseCommit, error)
 	GetAppHashSync(types.RequestGetAppHash) (*types.ResponseGetAppHash, error)
 	GenerateFraudProofSync(types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error)
-	TriggerFraudProofGenerationModeSync(types.RequestTriggerFraudProofGenerationMode) (*types.ResponseTriggerFraudProofGenerationMode, error)
+	TriggerFraudProofGenerationModeSync(
+		types.RequestTriggerFraudProofGenerationMode,
+	) (*types.ResponseTriggerFraudProofGenerationMode, error)
 }
 
 type AppConnMempool interface {
@@ -100,11 +102,15 @@ func (app *appConnConsensus) GetAppHashSync(req types.RequestGetAppHash) (*types
 	return app.appConn.GetAppHashSync(req)
 }
 
-func (app *appConnConsensus) GenerateFraudProofSync(req types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error) {
+func (app *appConnConsensus) GenerateFraudProofSync(
+	req types.RequestGenerateFraudProof,
+) (*types.ResponseGenerateFraudProof, error) {
 	return app.appConn.GenerateFraudProofSync(req)
 }
 
-func (app *appConnConsensus) TriggerFraudProofGenerationModeSync(req types.RequestTriggerFraudProofGenerationMode) (*types.ResponseTriggerFraudProofGenerationMode, error) {
+func (app *appConnConsensus) TriggerFraudProofGenerationModeSync(
+	req types.RequestTriggerFraudProofGenerationMode,
+) (*types.ResponseTriggerFraudProofGenerationMode, error) {
 	return app.appConn.TriggerFraudProofGenerationModeSync(req)
 }
 
