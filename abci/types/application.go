@@ -26,9 +26,9 @@ type Application interface {
 	DeliverTx(RequestDeliverTx) ResponseDeliverTx    // Deliver a tx for full processing
 	EndBlock(RequestEndBlock) ResponseEndBlock       // Signals the end of a block, returns changes to the validator set
 	Commit() ResponseCommit                          // Commit the state and return the application Merkle root hash
-	GetAppHash(RequestGetAppHash) ResponseGetAppHash 
+	GetAppHash(RequestGetAppHash) ResponseGetAppHash
 	GenerateFraudProof(RequestGenerateFraudProof) ResponseGenerateFraudProof // Generate Fraud Proof
-	VerifyFraudProof(RequestVerifyFraudProof) ResponseVerifyFraudProof// Verifies a Fraud Proof
+	VerifyFraudProof(RequestVerifyFraudProof) ResponseVerifyFraudProof       // Verifies a Fraud Proof
 
 	// State Sync Connection
 
@@ -118,6 +118,7 @@ func (BaseApplication) PrepareProposal(req RequestPrepareProposal) ResponsePrepa
 func (BaseApplication) ProcessProposal(req RequestProcessProposal) ResponseProcessProposal {
 	return ResponseProcessProposal{
 		Status: ResponseProcessProposal_ACCEPT}
+}
 func (BaseApplication) GetAppHash(req RequestGetAppHash) ResponseGetAppHash {
 	return ResponseGetAppHash{}
 }
@@ -222,6 +223,9 @@ func (app *GRPCApplication) PrepareProposal(
 func (app *GRPCApplication) ProcessProposal(
 	ctx context.Context, req *RequestProcessProposal) (*ResponseProcessProposal, error) {
 	res := app.app.ProcessProposal(*req)
+	return &res, nil
+}
+
 func (app *GRPCApplication) GetAppHash(
 	ctx context.Context, req *RequestGetAppHash) (*ResponseGetAppHash, error) {
 	res := app.app.GetAppHash(*req)

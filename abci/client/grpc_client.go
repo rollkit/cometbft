@@ -308,6 +308,8 @@ func (cli *grpcClient) ProcessProposalAsync(params types.RequestProcessProposal)
 	}
 
 	return cli.finishAsyncCall(req, &types.Response{Value: &types.Response_ProcessProposal{ProcessProposal: res}})
+}
+
 func (cli *grpcClient) GetAppHashAsync(params types.RequestGetAppHash) *ReqRes {
 	req := types.ToRequestGetAppHash(params)
 	res, err := cli.client.GetAppHash(context.Background(), req.GetGetAppHash(), grpc.WaitForReady(true))
@@ -460,6 +462,8 @@ func (cli *grpcClient) PrepareProposalSync(
 func (cli *grpcClient) ProcessProposalSync(params types.RequestProcessProposal) (*types.ResponseProcessProposal, error) {
 	reqres := cli.ProcessProposalAsync(params)
 	return cli.finishSyncCall(reqres).GetProcessProposal(), cli.Error()
+}
+
 func (cli *grpcClient) GetAppHashSync(
 	params types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
 	reqres := cli.GetAppHashAsync(params)

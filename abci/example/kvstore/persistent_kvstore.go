@@ -196,6 +196,8 @@ func (app *PersistentKVStoreApplication) ProcessProposal(
 		}
 	}
 	return types.ResponseProcessProposal{Status: types.ResponseProcessProposal_ACCEPT}
+}
+
 func (app *PersistentKVStoreApplication) GetAppHash(
 	req types.RequestGetAppHash) types.ResponseGetAppHash {
 	return types.ResponseGetAppHash{}

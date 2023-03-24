@@ -333,6 +333,52 @@ func (_m *Client) FlushSync() error {
 	return r0
 }
 
+// GenerateFraudProofSync provides a mock function with given fields: _a0
+func (_m *Client) GenerateFraudProofSync(_a0 types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error) {
+	ret := _m.Called(_a0)
+
+	var r0 *types.ResponseGenerateFraudProof
+	if rf, ok := ret.Get(0).(func(types.RequestGenerateFraudProof) *types.ResponseGenerateFraudProof); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseGenerateFraudProof)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(types.RequestGenerateFraudProof) error); ok {
+		r1 = rf(_a0)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// GetAppHashSync provides a mock function with given fields: _a0
+func (_m *Client) GetAppHashSync(_a0 types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
+	ret := _m.Called(_a0)
+
+	var r0 *types.ResponseGetAppHash
+	if rf, ok := ret.Get(0).(func(types.RequestGetAppHash) *types.ResponseGetAppHash); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseGetAppHash)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(types.RequestGetAppHash) error); ok {
+		r1 = rf(_a0)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // InfoAsync provides a mock function with given fields: _a0
 func (_m *Client) InfoAsync(_a0 types.RequestInfo) *abcicli.ReqRes {
 	ret := _m.Called(_a0)
@@ -692,76 +738,6 @@ func (_m *Client) QuerySync(_a0 types.RequestQuery) (*types.ResponseQuery, error
 	return r0, r1
 }
 
-// GetAppHashSync provides a mock function with given fields: _a0
-func (_m *Client) GetAppHashSync(_a0 types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
-	ret := _m.Called(_a0)
-
-	var r0 *types.ResponseGetAppHash
-	if rf, ok := ret.Get(0).(func(types.RequestGetAppHash) *types.ResponseGetAppHash); ok {
-		r0 = rf(_a0)
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*types.ResponseGetAppHash)
-		}
-	}
-
-	var r1 error
-	if rf, ok := ret.Get(1).(func(types.RequestGetAppHash) error); ok {
-		r1 = rf(_a0)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
-
-// GenerateFraudProofSync provides a mock function with given fields: _a0
-func (_m *Client) GenerateFraudProofSync(_a0 types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error) {
-	ret := _m.Called(_a0)
-
-	var r0 *types.ResponseGenerateFraudProof
-	if rf, ok := ret.Get(0).(func(types.RequestGenerateFraudProof) *types.ResponseGenerateFraudProof); ok {
-		r0 = rf(_a0)
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*types.ResponseGenerateFraudProof)
-		}
-	}
-
-	var r1 error
-	if rf, ok := ret.Get(1).(func(types.RequestGenerateFraudProof) error); ok {
-		r1 = rf(_a0)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
-// VerifyFraudProofSync provides a mock function with given fields: _a0
-func (_m *Client) VerifyFraudProofSync(_a0 types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error) {
-	ret := _m.Called(_a0)
-
-	var r0 *types.ResponseVerifyFraudProof
-	if rf, ok := ret.Get(0).(func(types.RequestVerifyFraudProof) *types.ResponseVerifyFraudProof); ok {
-		r0 = rf(_a0)
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*types.ResponseVerifyFraudProof)
-		}
-	}
-
-	var r1 error
-	if rf, ok := ret.Get(1).(func(types.RequestVerifyFraudProof) error); ok {
-		r1 = rf(_a0)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
 // Quit provides a mock function with given fields:
 func (_m *Client) Quit() <-chan struct{} {
 	ret := _m.Called()
@@ -842,6 +818,29 @@ func (_m *Client) String() string {
 	}
 
 	return r0
+}
+
+// VerifyFraudProofSync provides a mock function with given fields: _a0
+func (_m *Client) VerifyFraudProofSync(_a0 types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error) {
+	ret := _m.Called(_a0)
+
+	var r0 *types.ResponseVerifyFraudProof
+	if rf, ok := ret.Get(0).(func(types.RequestVerifyFraudProof) *types.ResponseVerifyFraudProof); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseVerifyFraudProof)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(types.RequestVerifyFraudProof) error); ok {
+		r1 = rf(_a0)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 type mockConstructorTestingTNewClient interface {

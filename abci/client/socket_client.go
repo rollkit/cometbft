@@ -281,6 +281,8 @@ func (cli *socketClient) PrepareProposalAsync(req types.RequestPrepareProposal) 
 
 func (cli *socketClient) ProcessProposalAsync(req types.RequestProcessProposal) *ReqRes {
 	return cli.queueRequest(types.ToRequestProcessProposal(req))
+}
+
 func (cli *socketClient) GetAppHashAsync(req types.RequestGetAppHash) *ReqRes {
 	return cli.queueRequest(types.ToRequestGetAppHash(req))
 }
@@ -436,6 +438,8 @@ func (cli *socketClient) ProcessProposalSync(req types.RequestProcessProposal) (
 	}
 
 	return reqres.Response.GetProcessProposal(), cli.Error()
+}
+
 func (cli *socketClient) GetAppHashSync(
 	req types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
 	reqres := cli.queueRequest(types.ToRequestGetAppHash(req))

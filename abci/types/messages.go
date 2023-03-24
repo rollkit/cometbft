@@ -123,6 +123,9 @@ func ToRequestPrepareProposal(req RequestPrepareProposal) *Request {
 func ToRequestProcessProposal(req RequestProcessProposal) *Request {
 	return &Request{
 		Value: &Request_ProcessProposal{&req},
+	}
+}
+
 func ToRequestGetAppHash(req RequestGetAppHash) *Request {
 	return &Request{
 		Value: &Request_GetAppHash{&req},
@@ -242,6 +245,9 @@ func ToResponsePrepareProposal(res ResponsePrepareProposal) *Response {
 func ToResponseProcessProposal(res ResponseProcessProposal) *Response {
 	return &Response{
 		Value: &Response_ProcessProposal{&res},
+	}
+}
+
 func ToResponseGetAppHash(res ResponseGetAppHash) *Response {
 	return &Response{
 		Value: &Response_GetAppHash{&res},

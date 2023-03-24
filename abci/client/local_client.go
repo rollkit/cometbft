@@ -215,6 +215,9 @@ func (app *localClient) ProcessProposalAsync(req types.RequestProcessProposal) *
 	return app.callback(
 		types.ToRequestProcessProposal(req),
 		types.ToResponseProcessProposal(res),
+	)
+}
+
 func (app *localClient) GetAppHashAsync(req types.RequestGetAppHash) *ReqRes {
 	app.mtx.Lock()
 	defer app.mtx.Unlock()
@@ -369,6 +372,9 @@ func (app *localClient) ProcessProposalSync(req types.RequestProcessProposal) (*
 	defer app.mtx.Unlock()
 
 	res := app.Application.ProcessProposal(req)
+	return &res, nil
+}
+
 func (app *localClient) GetAppHashSync(
 	req types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
 	app.mtx.Lock()
