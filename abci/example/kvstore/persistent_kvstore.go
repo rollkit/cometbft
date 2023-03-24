@@ -196,6 +196,19 @@ func (app *PersistentKVStoreApplication) ProcessProposal(
 		}
 	}
 	return types.ResponseProcessProposal{Status: types.ResponseProcessProposal_ACCEPT}
+func (app *PersistentKVStoreApplication) GetAppHash(
+	req types.RequestGetAppHash) types.ResponseGetAppHash {
+	return types.ResponseGetAppHash{}
+}
+
+func (app *PersistentKVStoreApplication) GenerateFraudProof(
+	req types.RequestGenerateFraudProof) types.ResponseGenerateFraudProof {
+	return types.ResponseGenerateFraudProof{}
+}
+
+func (app *PersistentKVStoreApplication) VerifyFraudProof(
+	req types.RequestVerifyFraudProof) types.ResponseVerifyFraudProof {
+	return types.ResponseVerifyFraudProof{}
 }
 
 //---------------------------------------------

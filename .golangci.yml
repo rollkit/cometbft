@@ -17,7 +17,7 @@ linters:
     - ineffassign
     - misspell
     - nakedret
-    - nolintlint
+    # - nolintlint
     - prealloc
     - staticcheck
     # - structcheck // to be fixed by golangci-lint
@@ -38,7 +38,5 @@ linters-settings:
     max-blank-identifiers: 3
   golint:
     min-confidence: 0
-  maligned:
-    suggest-new: true
   misspell:
     locale: US

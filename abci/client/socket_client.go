@@ -281,6 +281,14 @@ func (cli *socketClient) PrepareProposalAsync(req types.RequestPrepareProposal) 
 
 func (cli *socketClient) ProcessProposalAsync(req types.RequestProcessProposal) *ReqRes {
 	return cli.queueRequest(types.ToRequestProcessProposal(req))
+func (cli *socketClient) GetAppHashAsync(req types.RequestGetAppHash) *ReqRes {
+	return cli.queueRequest(types.ToRequestGetAppHash(req))
+}
+
+func (cli *socketClient) GenerateFraudProofAsync(
+	req types.RequestGenerateFraudProof,
+) *ReqRes {
+	return cli.queueRequest(types.ToRequestGenerateFraudProof(req))
 }
 
 //----------------------------------------
@@ -428,6 +436,31 @@ func (cli *socketClient) ProcessProposalSync(req types.RequestProcessProposal) (
 	}
 
 	return reqres.Response.GetProcessProposal(), cli.Error()
+func (cli *socketClient) GetAppHashSync(
+	req types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
+	reqres := cli.queueRequest(types.ToRequestGetAppHash(req))
+	if err := cli.FlushSync(); err != nil {
+		return nil, err
+	}
+	return reqres.Response.GetGetAppHash(), cli.Error()
+}
+
+func (cli *socketClient) GenerateFraudProofSync(
+	req types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error) {
+	reqres := cli.queueRequest(types.ToRequestGenerateFraudProof(req))
+	if err := cli.FlushSync(); err != nil {
+		return nil, err
+	}
+	return reqres.Response.GetGenerateFraudProof(), cli.Error()
+}
+
+func (cli *socketClient) VerifyFraudProofSync(
+	req types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error) {
+	reqres := cli.queueRequest(types.ToRequestVerifyFraudProof(req))
+	if err := cli.FlushSync(); err != nil {
+		return nil, err
+	}
+	return reqres.Response.GetVerifyFraudProof(), cli.Error()
 }
 
 //----------------------------------------

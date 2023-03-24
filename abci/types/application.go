@@ -26,12 +26,20 @@ type Application interface {
 	DeliverTx(RequestDeliverTx) ResponseDeliverTx    // Deliver a tx for full processing
 	EndBlock(RequestEndBlock) ResponseEndBlock       // Signals the end of a block, returns changes to the validator set
 	Commit() ResponseCommit                          // Commit the state and return the application Merkle root hash
+	GetAppHash(RequestGetAppHash) ResponseGetAppHash 
+	GenerateFraudProof(RequestGenerateFraudProof) ResponseGenerateFraudProof // Generate Fraud Proof
+	VerifyFraudProof(RequestVerifyFraudProof) ResponseVerifyFraudProof// Verifies a Fraud Proof
 
 	// State Sync Connection
-	ListSnapshots(RequestListSnapshots) ResponseListSnapshots                // List available snapshots
-	OfferSnapshot(RequestOfferSnapshot) ResponseOfferSnapshot                // Offer a snapshot to the application
-	LoadSnapshotChunk(RequestLoadSnapshotChunk) ResponseLoadSnapshotChunk    // Load a snapshot chunk
-	ApplySnapshotChunk(RequestApplySnapshotChunk) ResponseApplySnapshotChunk // Apply a shapshot chunk
+
+	// List available snapshots
+	ListSnapshots(RequestListSnapshots) ResponseListSnapshots
+	// Offer a snapshot to the application
+	OfferSnapshot(RequestOfferSnapshot) ResponseOfferSnapshot
+	// Load a snapshot chunk
+	LoadSnapshotChunk(RequestLoadSnapshotChunk) ResponseLoadSnapshotChunk
+	// Apply a shapshot chunk
+	ApplySnapshotChunk(RequestApplySnapshotChunk) ResponseApplySnapshotChunk
 }
 
 //-------------------------------------------------------
@@ -110,6 +118,16 @@ func (BaseApplication) PrepareProposal(req RequestPrepareProposal) ResponsePrepa
 func (BaseApplication) ProcessProposal(req RequestProcessProposal) ResponseProcessProposal {
 	return ResponseProcessProposal{
 		Status: ResponseProcessProposal_ACCEPT}
+func (BaseApplication) GetAppHash(req RequestGetAppHash) ResponseGetAppHash {
+	return ResponseGetAppHash{}
+}
+
+func (BaseApplication) GenerateFraudProof(req RequestGenerateFraudProof) ResponseGenerateFraudProof {
+	return ResponseGenerateFraudProof{}
+}
+
+func (BaseApplication) VerifyFraudProof(req RequestVerifyFraudProof) ResponseVerifyFraudProof {
+	return ResponseVerifyFraudProof{}
 }
 
 //-------------------------------------------------------
@@ -204,5 +222,20 @@ func (app *GRPCApplication) PrepareProposal(
 func (app *GRPCApplication) ProcessProposal(
 	ctx context.Context, req *RequestProcessProposal) (*ResponseProcessProposal, error) {
 	res := app.app.ProcessProposal(*req)
+func (app *GRPCApplication) GetAppHash(
+	ctx context.Context, req *RequestGetAppHash) (*ResponseGetAppHash, error) {
+	res := app.app.GetAppHash(*req)
+	return &res, nil
+}
+
+func (app *GRPCApplication) GenerateFraudProof(
+	ctx context.Context, req *RequestGenerateFraudProof) (*ResponseGenerateFraudProof, error) {
+	res := app.app.GenerateFraudProof(*req)
+	return &res, nil
+}
+
+func (app *GRPCApplication) VerifyFraudProof(
+	ctx context.Context, req *RequestVerifyFraudProof) (*ResponseVerifyFraudProof, error) {
+	res := app.app.VerifyFraudProof(*req)
 	return &res, nil
 }

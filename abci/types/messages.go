@@ -123,6 +123,21 @@ func ToRequestPrepareProposal(req RequestPrepareProposal) *Request {
 func ToRequestProcessProposal(req RequestProcessProposal) *Request {
 	return &Request{
 		Value: &Request_ProcessProposal{&req},
+func ToRequestGetAppHash(req RequestGetAppHash) *Request {
+	return &Request{
+		Value: &Request_GetAppHash{&req},
+	}
+}
+
+func ToRequestGenerateFraudProof(req RequestGenerateFraudProof) *Request {
+	return &Request{
+		Value: &Request_GenerateFraudProof{&req},
+	}
+}
+
+func ToRequestVerifyFraudProof(req RequestVerifyFraudProof) *Request {
+	return &Request{
+		Value: &Request_VerifyFraudProof{&req},
 	}
 }
 
@@ -227,5 +242,20 @@ func ToResponsePrepareProposal(res ResponsePrepareProposal) *Response {
 func ToResponseProcessProposal(res ResponseProcessProposal) *Response {
 	return &Response{
 		Value: &Response_ProcessProposal{&res},
+func ToResponseGetAppHash(res ResponseGetAppHash) *Response {
+	return &Response{
+		Value: &Response_GetAppHash{&res},
+	}
+}
+
+func ToResponseGenerateFraudProof(res ResponseGenerateFraudProof) *Response {
+	return &Response{
+		Value: &Response_GenerateFraudProof{&res},
+	}
+}
+
+func ToResponseVerifyFraudProof(res ResponseVerifyFraudProof) *Response {
+	return &Response{
+		Value: &Response_VerifyFraudProof{&res},
 	}
 }
