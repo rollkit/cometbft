@@ -41,27 +41,18 @@ func (_m *AppConnConsensus) Commit(_a0 context.Context) (*types.ResponseCommit, 
 	return r0, r1
 }
 
-// GetAppHashSync provides a mock function with given fields: _a0
-func (_m *AppConnConsensus) GetAppHashSync(_a0 types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
-	ret := _m.Called(_a0)
+// Error provides a mock function with given fields:
+func (_m *AppConnConsensus) Error() error {
+	ret := _m.Called()
 
-	var r0 *types.ResponseGetAppHash
-	if rf, ok := ret.Get(0).(func(types.RequestGetAppHash) *types.ResponseGetAppHash); ok {
-		r0 = rf(_a0)
+	var r0 error
+	if rf, ok := ret.Get(0).(func() error); ok {
+		r0 = rf()
 	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*types.ResponseGetAppHash)
-		}
+		r0 = ret.Error(0)
 	}
 
-	var r1 error
-	if rf, ok := ret.Get(1).(func(types.RequestGetAppHash) error); ok {
-		r1 = rf(_a0)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
+	return r0
 }
 
 // GenerateFraudProofSync provides a mock function with given fields: _a0
@@ -87,21 +78,21 @@ func (_m *AppConnConsensus) GenerateFraudProofSync(_a0 types.RequestGenerateFrau
 	return r0, r1
 }
 
-// VerifyFraudProofSync provides a mock function with given fields: _a0
-func (_m *AppConnConsensus) VerifyFraudProofSync(_a0 types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error) {
+// GetAppHashSync provides a mock function with given fields: _a0
+func (_m *AppConnConsensus) GetAppHashSync(_a0 types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
 	ret := _m.Called(_a0)
 
-	var r0 *types.ResponseVerifyFraudProof
-	if rf, ok := ret.Get(0).(func(types.RequestVerifyFraudProof) *types.ResponseVerifyFraudProof); ok {
+	var r0 *types.ResponseGetAppHash
+	if rf, ok := ret.Get(0).(func(types.RequestGetAppHash) *types.ResponseGetAppHash); ok {
 		r0 = rf(_a0)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*types.ResponseVerifyFraudProof)
+			r0 = ret.Get(0).(*types.ResponseGetAppHash)
 		}
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(types.RequestVerifyFraudProof) error); ok {
+	if rf, ok := ret.Get(1).(func(types.RequestGetAppHash) error); ok {
 		r1 = rf(_a0)
 	} else {
 		r1 = ret.Error(1)
@@ -280,13 +271,36 @@ func (_m *AppConnConsensus) VerifyVoteExtension(_a0 context.Context, _a1 *types.
 	return r0, r1
 }
 
-type NewAppConnConsensusT interface {
+// VerifyFraudProofSync provides a mock function with given fields: _a0
+func (_m *AppConnConsensus) VerifyFraudProofSync(_a0 types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error) {
+	ret := _m.Called(_a0)
+
+	var r0 *types.ResponseVerifyFraudProof
+	if rf, ok := ret.Get(0).(func(types.RequestVerifyFraudProof) *types.ResponseVerifyFraudProof); ok {
+		r0 = rf(_a0)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseVerifyFraudProof)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(types.RequestVerifyFraudProof) error); ok {
+		r1 = rf(_a0)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+type mockConstructorTestingTNewAppConnConsensus interface {
 	mock.TestingT
 	Cleanup(func())
 }
 
 // NewAppConnConsensus creates a new instance of AppConnConsensus. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
-func NewAppConnConsensus(t NewAppConnConsensusT) *AppConnConsensus {
+func NewAppConnConsensus(t mockConstructorTestingTNewAppConnConsensus) *AppConnConsensus {
 	mock := &AppConnConsensus{}
 	mock.Mock.Test(t)
 

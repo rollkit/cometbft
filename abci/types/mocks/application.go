@@ -378,6 +378,20 @@ func (_m *Application) VerifyVoteExtension(_a0 context.Context, _a1 *types.Reque
 	return r0, r1
 }
 
+// VerifyFraudProof provides a mock function with given fields: _a0
+func (_m *Application) VerifyFraudProof(_a0 types.RequestVerifyFraudProof) types.ResponseVerifyFraudProof {
+	ret := _m.Called(_a0)
+
+	var r0 types.ResponseVerifyFraudProof
+	if rf, ok := ret.Get(0).(func(types.RequestVerifyFraudProof) types.ResponseVerifyFraudProof); ok {
+		r0 = rf(_a0)
+	} else {
+		r0 = ret.Get(0).(types.ResponseVerifyFraudProof)
+	}
+
+	return r0
+}
+
 type mockConstructorTestingTNewApplication interface {
 	mock.TestingT
 	Cleanup(func())
