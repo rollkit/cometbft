@@ -184,3 +184,24 @@ func (app *localClient) FinalizeBlock(ctx context.Context, req *types.RequestFin
 
 	return app.Application.FinalizeBlock(ctx, req)
 }
+
+func (app *localClient) GetAppHash(ctx context.Context, req *types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
+	app.mtx.Lock()
+	defer app.mtx.Unlock()
+
+	return app.Application.GetAppHash(ctx, req)
+}
+
+func (app *localClient) GenerateFraudProof(ctx context.Context, req *types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error) {
+	app.mtx.Lock()
+	defer app.mtx.Unlock()
+
+	return app.Application.GenerateFraudProof(ctx, req)
+}
+
+func (app *localClient) VerifyFraudProof(ctx context.Context, req *types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error) {
+	app.mtx.Lock()
+	defer app.mtx.Unlock()
+
+	return app.Application.VerifyFraudProof(ctx, req)
+}

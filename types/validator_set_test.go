@@ -1526,8 +1526,6 @@ func (valz validatorsByPriority) Swap(i, j int) {
 	valz[i], valz[j] = valz[j], valz[i]
 }
 
-//-------------------------------------
-
 type testValsByVotingPower []testVal
 
 func (tvals testValsByVotingPower) Len() int {

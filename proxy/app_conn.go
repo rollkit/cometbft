@@ -24,6 +24,9 @@ type AppConnConsensus interface {
 	VerifyVoteExtension(context.Context, *types.RequestVerifyVoteExtension) (*types.ResponseVerifyVoteExtension, error)
 	FinalizeBlock(context.Context, *types.RequestFinalizeBlock) (*types.ResponseFinalizeBlock, error)
 	Commit(context.Context) (*types.ResponseCommit, error)
+	GetAppHash(context.Context, *types.RequestGetAppHash) (*types.ResponseGetAppHash, error)
+	GenerateFraudProof(context.Context, *types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error)
+	VerifyFraudProof(context.Context, *types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error)
 }
 
 type AppConnMempool interface {
@@ -107,6 +110,22 @@ func (app *appConnConsensus) FinalizeBlock(ctx context.Context, req *types.Reque
 func (app *appConnConsensus) Commit(ctx context.Context) (*types.ResponseCommit, error) {
 	defer addTimeSample(app.metrics.MethodTimingSeconds.With("method", "commit", "type", "sync"))()
 	return app.appConn.Commit(ctx, &types.RequestCommit{})
+}
+
+func (app *appConnConsensus) GetAppHashSync(req types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
+	return app.appConn.GetAppHashSync(req)
+}
+
+func (app *appConnConsensus) GenerateFraudProofSync(
+	req types.RequestGenerateFraudProof,
+) (*types.ResponseGenerateFraudProof, error) {
+	return app.appConn.GenerateFraudProofSync(req)
+}
+
+func (app *appConnConsensus) VerifyFraudProofSync(
+	req types.RequestVerifyFraudProof,
+) (*types.ResponseVerifyFraudProof, error) {
+	return app.appConn.VerifyFraudProofSync(req)
 }
 
 //------------------------------------------------

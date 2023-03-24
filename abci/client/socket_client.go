@@ -412,6 +412,39 @@ func (cli *socketClient) FinalizeBlock(ctx context.Context, req *types.RequestFi
 	return reqRes.Response.GetFinalizeBlock(), cli.Error()
 }
 
+func (cli *socketClient) GetAppHash(ctx context.Context, req *types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
+	reqres := cli.queueRequest(types.ToRequestGetAppHash(req))
+	if err != nil {
+		return nil, err
+	}
+	if err := cli.FlushSync(ctx); err != nil {
+		return nil, err
+	}
+	return reqres.Response.GetGetAppHash(), cli.Error()
+}
+
+func (cli *socketClient) GenerateFraudProof(ctx context.Context, req *types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error) {
+	reqres := cli.queueRequest(types.ToRequestGenerateFraudProof(req))
+	if err != nil {
+		return nil, err
+	}
+	if err := cli.FlushSync(ctx); err != nil {
+		return nil, err
+	}
+	return reqres.Response.GetGenerateFraudProof(), cli.Error()
+}
+
+func (cli *socketClient) VerifyFraudProof(ctx context.Context, req *types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error) {
+	reqres := cli.queueRequest(types.ToRequestVerifyFraudProof(req))
+	if err != nil {
+		return nil, err
+	}
+	if err := cli.FlushSync(ctx); err != nil {
+		return nil, err
+	}
+	return reqres.Response.GetVerifyFraudProof(), cli.Error()
+}
+
 func (cli *socketClient) queueRequest(ctx context.Context, req *types.Request) (*ReqRes, error) {
 	reqres := NewReqRes(req)
 
@@ -493,6 +526,12 @@ func resMatchesReq(req *types.Request, res *types.Response) (ok bool) {
 		_, ok = res.Value.(*types.Response_ProcessProposal)
 	case *types.Request_FinalizeBlock:
 		_, ok = res.Value.(*types.Response_FinalizeBlock)
+	case *types.Request_GetAppHash:
+		_, ok = res.Value.(*types.Response_GetAppHash)
+	case *types.Request_GenerateFraudProof:
+		_, ok = res.Value.(*types.Response_GenerateFraudProof)
+	case *types.Request_VerifyFraudProof:
+		_, ok = res.Value.(*types.Response_VerifyFraudProof)
 	}
 	return ok
 }

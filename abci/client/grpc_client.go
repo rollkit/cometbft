@@ -245,3 +245,15 @@ func (cli *grpcClient) VerifyVoteExtension(ctx context.Context, req *types.Reque
 func (cli *grpcClient) FinalizeBlock(ctx context.Context, req *types.RequestFinalizeBlock) (*types.ResponseFinalizeBlock, error) {
 	return cli.client.FinalizeBlock(ctx, types.ToRequestFinalizeBlock(req).GetFinalizeBlock(), grpc.WaitForReady(true))
 }
+
+func (cli *grpcClient) GetAppHash(ctx context.Context, req *types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
+	return cli.client.GetAppHash(ctx, types.ToRequestGetAppHash(req).GetGetAppHash(), grpc.WaitForReady(true))
+}
+
+func (cli *grpcClient) GenerateFraudProof(ctx context.Context, req *types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error) {
+	return cli.client.GenerateFraudProof(ctx, types.ToRequestGenerateFraudProof(req).GetGenerateFraudProof(), grpc.WaitForReady(true))
+}
+
+func (cli *grpcClient) VerifyFraudProof(ctx context.Context, req *types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error) {
+	return cli.client.VerifyFraudProof(ctx, types.ToRequestVerifyFraudProof(req).GetVerifyFraudProof(), grpc.WaitForReady(true))
+}

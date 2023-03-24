@@ -300,6 +300,24 @@ func (s *SocketServer) handleRequest(ctx context.Context, req *types.Request) (*
 			return nil, err
 		}
 		return types.ToResponseVerifyVoteExtension(res), nil
+	case *types.Request_GetAppHash:
+		res, err := s.app.GetAppHash(ctx, r.GetAppHash)
+		if err != nil {
+			return nil, err
+		}
+		return types.ToResponseGetAppHash(res), nil
+	case *types.Request_GenerateFraudProof:
+		res, err := s.app.GenerateFraudProof(ctx, r.GenerateFraudProof)
+		if err != nil {
+			return nil, err
+		}
+		return types.ToResponseGenerateFraudProof(res), nil
+	case *types.Request_VerifyFraudProof:
+		res, err := s.app.VerifyFraudProof(ctx, r.VerifyFraudProof)
+		if err != nil {
+			return nil, err
+		}
+		return types.ToResponseVerifyFraudProof(res), nil
 	default:
 		return nil, fmt.Errorf("unknown request from client: %T", req)
 	}

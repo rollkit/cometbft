@@ -16,7 +16,7 @@ import (
 	"github.com/cometbft/cometbft/version"
 )
 
-// database keys
+// database key
 var (
 	stateKey = []byte("stateKey")
 )

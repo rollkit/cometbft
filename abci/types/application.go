@@ -32,6 +32,11 @@ type Application interface {
 	OfferSnapshot(context.Context, *RequestOfferSnapshot) (*ResponseOfferSnapshot, error)                // Offer a snapshot to the application
 	LoadSnapshotChunk(context.Context, *RequestLoadSnapshotChunk) (*ResponseLoadSnapshotChunk, error)    // Load a snapshot chunk
 	ApplySnapshotChunk(context.Context, *RequestApplySnapshotChunk) (*ResponseApplySnapshotChunk, error) // Apply a shapshot chunk
+
+	// Fraud Proof Connection
+	GetAppHash(RequestGetAppHash) ResponseGetAppHash
+	GenerateFraudProof(RequestGenerateFraudProof) ResponseGenerateFraudProof // Generate Fraud Proof
+	VerifyFraudProof(RequestVerifyFraudProof) ResponseVerifyFraudProof       // Verifies a Fraud Proof
 }
 
 //-------------------------------------------------------
@@ -96,6 +101,18 @@ func (BaseApplication) PrepareProposal(_ context.Context, req *RequestPreparePro
 
 func (BaseApplication) ProcessProposal(context.Context, *RequestProcessProposal) (*ResponseProcessProposal, error) {
 	return &ResponseProcessProposal{Status: ResponseProcessProposal_ACCEPT}, nil
+}
+
+func (BaseApplication) GetAppHash(context.Context, req *RequestGetAppHash) (*ResponseGetAppHash, error) {
+	return ResponseGetAppHash{}
+}
+
+func (BaseApplication) GenerateFraudProof(context.Context, req *RequestGenerateFraudProof) (*ResponseGenerateFraudProof, error) {
+	return ResponseGenerateFraudProof{}
+}
+
+func (BaseApplication) VerifyFraudProof(context.Context, req *RequestVerifyFraudProof) (*ResponseVerifyFraudProof, error) {
+	return ResponseVerifyFraudProof{}
 }
 
 func (BaseApplication) ExtendVote(context.Context, *RequestExtendVote) (*ResponseExtendVote, error) {

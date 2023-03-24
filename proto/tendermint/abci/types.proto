@@ -34,6 +34,9 @@ service ABCI {
   rpc ExtendVote(RequestExtendVote) returns (ResponseExtendVote);
   rpc VerifyVoteExtension(RequestVerifyVoteExtension) returns (ResponseVerifyVoteExtension);
   rpc FinalizeBlock(RequestFinalizeBlock) returns (ResponseFinalizeBlock);
+  rpc GetAppHash(RequestGetAppHash) returns (ResponseGetAppHash);
+  rpc GenerateFraudProof(RequestGenerateFraudProof) returns (ResponseGenerateFraudProof);
+  rpc VerifyFraudProof(RequestVerifyFraudProof) returns (ResponseVerifyFraudProof);
 }
 
 //----------------------------------------
@@ -57,6 +60,9 @@ message Request {
     RequestExtendVote          extend_vote           = 18;
     RequestVerifyVoteExtension verify_vote_extension = 19;
     RequestFinalizeBlock       finalize_block        = 20;
+    RequestGetAppHash          get_app_hash          = 21;
+    RequestGenerateFraudProof  generate_fraud_proof  = 22;
+    RequestVerifyFraudProof    verify_fraud_proof    = 23;
   }
   reserved 4, 7, 9, 10;  // SetOption, BeginBlock, DeliverTx, EndBlock
 }
@@ -154,6 +160,22 @@ message RequestProcessProposal {
   bytes proposer_address = 8;
 }
 
+// Gets the current appHash
+message RequestGetAppHash {}
+
+// Generates a fraud proof
+message RequestGenerateFraudProof {
+  RequestBeginBlock begin_block_request = 1 [(gogoproto.nullable) = false];
+  repeated RequestDeliverTx deliver_tx_requests = 2;
+  RequestEndBlock end_block_request = 3;
+}
+
+// Verifies a fraud proof
+message RequestVerifyFraudProof {
+  FraudProof fraud_proof = 1;
+  bytes expected_valid_app_hash = 2;
+}
+
 // Extends a vote with application-injected data
 message RequestExtendVote {
   // the hash of the block  that this vote may be referring to
@@ -207,6 +229,9 @@ message Response {
     ResponseExtendVote          extend_vote           = 19;
     ResponseVerifyVoteExtension verify_vote_extension = 20;
     ResponseFinalizeBlock       finalize_block        = 21;
+    ResponseGetAppHash          get_app_hash          = 22;
+    ResponseGenerateFraudProof  generate_fraud_proof  = 23;
+    ResponseVerifyFraudProof    verify_fraud_proof    = 24;
   }
   reserved 5, 8, 10, 11;  // SetOption, BeginBlock, DeliverTx, EndBlock
 }
@@ -321,6 +346,18 @@ message ResponseProcessProposal {
     ACCEPT  = 1;
     REJECT  = 2;
   }
+}
+
+message ResponseGetAppHash {
+  bytes app_hash = 1;
+}
+
+message ResponseGenerateFraudProof {
+  FraudProof fraud_proof = 1;
+}
+
+message ResponseVerifyFraudProof {
+  bool success = 1;
 }
 
 message ResponseExtendVote {
@@ -484,3 +521,40 @@ message Snapshot {
   bytes  hash     = 4;  // Arbitrary snapshot hash, equal only if identical
   bytes  metadata = 5;  // Arbitrary application metadata
 }
+
+// Represents a single-round fraudProof
+message FraudProof {
+  int64 block_height = 1;
+  bytes pre_state_app_hash = 2;
+  bytes expected_valid_app_hash = 3;
+  map<string, StateWitness> state_witness = 4;
+
+  RequestBeginBlock fraudulent_begin_block = 5;
+  RequestDeliverTx fraudulent_deliver_tx = 6;
+  RequestEndBlock fraudulent_end_block = 7;
+}
+
+// State witness with a list of all witness data
+message StateWitness {
+  // store level proof
+  tendermint.crypto.ProofOp proof = 1;
+  // substore level hash
+  bytes root_hash = 2;
+  // List of witness data
+  repeated WitnessData witness_data = 3;
+}
+
+// Witness data containing a key/value pair and a Merkle proof for said key/value pair
+message WitnessData {
+  Operation operation = 1;
+  bytes key = 2;
+  bytes value = 3;
+  repeated tendermint.crypto.ProofOp proofs = 4;
+}
+
+enum Operation {
+   WRITE     = 0 [(gogoproto.enumvalue_customname) = "write"];
+   READ      = 1 [(gogoproto.enumvalue_customname) = "read"];
+   DELETE    = 2 [(gogoproto.enumvalue_customname) = "delete"];
+}
+
