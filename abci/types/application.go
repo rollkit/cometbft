@@ -18,17 +18,34 @@ type Application interface {
 	CheckTx(RequestCheckTx) ResponseCheckTx // Validate a tx for the mempool
 
 	// Consensus Connection
-	InitChain(RequestInitChain) ResponseInitChain    // Initialize blockchain w validators/other info from CometBFT
-	BeginBlock(RequestBeginBlock) ResponseBeginBlock // Signals the beginning of a block
-	DeliverTx(RequestDeliverTx) ResponseDeliverTx    // Deliver a tx for full processing
-	EndBlock(RequestEndBlock) ResponseEndBlock       // Signals the end of a block, returns changes to the validator set
-	Commit() ResponseCommit                          // Commit the state and return the application Merkle root hash
+
+	// Initialize blockchain w validators/other info from TendermintCore
+	InitChain(RequestInitChain) ResponseInitChain
+	// Signals the beginning of a block
+	BeginBlock(RequestBeginBlock) ResponseBeginBlock
+	// Deliver a tx for full processing
+	DeliverTx(RequestDeliverTx) ResponseDeliverTx
+	// Signals the end of a block, returns changes to the validator set
+	EndBlock(RequestEndBlock) ResponseEndBlock
+	// Commit the state and return the application Merkle root hash
+	Commit() ResponseCommit
+	// Get appHash
+	GetAppHash(RequestGetAppHash) ResponseGetAppHash
+	// Generate Fraud Proof
+	GenerateFraudProof(RequestGenerateFraudProof) ResponseGenerateFraudProof
+	// Verifies a Fraud Proof
+	VerifyFraudProof(RequestVerifyFraudProof) ResponseVerifyFraudProof
 
 	// State Sync Connection
-	ListSnapshots(RequestListSnapshots) ResponseListSnapshots                // List available snapshots
-	OfferSnapshot(RequestOfferSnapshot) ResponseOfferSnapshot                // Offer a snapshot to the application
-	LoadSnapshotChunk(RequestLoadSnapshotChunk) ResponseLoadSnapshotChunk    // Load a snapshot chunk
-	ApplySnapshotChunk(RequestApplySnapshotChunk) ResponseApplySnapshotChunk // Apply a shapshot chunk
+
+	// List available snapshots
+	ListSnapshots(RequestListSnapshots) ResponseListSnapshots
+	// Offer a snapshot to the application
+	OfferSnapshot(RequestOfferSnapshot) ResponseOfferSnapshot
+	// Load a snapshot chunk
+	LoadSnapshotChunk(RequestLoadSnapshotChunk) ResponseLoadSnapshotChunk
+	// Apply a shapshot chunk
+	ApplySnapshotChunk(RequestApplySnapshotChunk) ResponseApplySnapshotChunk
 }
 
 //-------------------------------------------------------
@@ -93,6 +110,18 @@ func (BaseApplication) LoadSnapshotChunk(req RequestLoadSnapshotChunk) ResponseL
 
 func (BaseApplication) ApplySnapshotChunk(req RequestApplySnapshotChunk) ResponseApplySnapshotChunk {
 	return ResponseApplySnapshotChunk{}
+}
+
+func (BaseApplication) GetAppHash(req RequestGetAppHash) ResponseGetAppHash {
+	return ResponseGetAppHash{}
+}
+
+func (BaseApplication) GenerateFraudProof(req RequestGenerateFraudProof) ResponseGenerateFraudProof {
+	return ResponseGenerateFraudProof{}
+}
+
+func (BaseApplication) VerifyFraudProof(req RequestVerifyFraudProof) ResponseVerifyFraudProof {
+	return ResponseVerifyFraudProof{}
 }
 
 //-------------------------------------------------------
@@ -180,5 +209,23 @@ func (app *GRPCApplication) LoadSnapshotChunk(
 func (app *GRPCApplication) ApplySnapshotChunk(
 	ctx context.Context, req *RequestApplySnapshotChunk) (*ResponseApplySnapshotChunk, error) {
 	res := app.app.ApplySnapshotChunk(*req)
+	return &res, nil
+}
+
+func (app *GRPCApplication) GetAppHash(
+	ctx context.Context, req *RequestGetAppHash) (*ResponseGetAppHash, error) {
+	res := app.app.GetAppHash(*req)
+	return &res, nil
+}
+
+func (app *GRPCApplication) GenerateFraudProof(
+	ctx context.Context, req *RequestGenerateFraudProof) (*ResponseGenerateFraudProof, error) {
+	res := app.app.GenerateFraudProof(*req)
+	return &res, nil
+}
+
+func (app *GRPCApplication) VerifyFraudProof(
+	ctx context.Context, req *RequestVerifyFraudProof) (*ResponseVerifyFraudProof, error) {
+	res := app.app.VerifyFraudProof(*req)
 	return &res, nil
 }
