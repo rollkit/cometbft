@@ -55,66 +55,6 @@ func (_m *AppConnConsensus) Error() error {
 	return r0
 }
 
-// GenerateFraudProofSync provides a mock function with given fields: _a0
-func (_m *AppConnConsensus) GenerateFraudProofSync(_a0 types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error) {
-	ret := _m.Called(_a0)
-
-	var r0 *types.ResponseGenerateFraudProof
-	if rf, ok := ret.Get(0).(func(types.RequestGenerateFraudProof) *types.ResponseGenerateFraudProof); ok {
-		r0 = rf(_a0)
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*types.ResponseGenerateFraudProof)
-		}
-	}
-
-	var r1 error
-	if rf, ok := ret.Get(1).(func(types.RequestGenerateFraudProof) error); ok {
-		r1 = rf(_a0)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
-// GetAppHashSync provides a mock function with given fields: _a0
-func (_m *AppConnConsensus) GetAppHashSync(_a0 types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
-	ret := _m.Called(_a0)
-
-	var r0 *types.ResponseGetAppHash
-	if rf, ok := ret.Get(0).(func(types.RequestGetAppHash) *types.ResponseGetAppHash); ok {
-		r0 = rf(_a0)
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*types.ResponseGetAppHash)
-		}
-	}
-
-	var r1 error
-	if rf, ok := ret.Get(1).(func(types.RequestGetAppHash) error); ok {
-		r1 = rf(_a0)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
-// Error provides a mock function with given fields:
-func (_m *AppConnConsensus) Error() error {
-	ret := _m.Called()
-
-	var r0 error
-	if rf, ok := ret.Get(0).(func() error); ok {
-		r0 = rf()
-	} else {
-		r0 = ret.Error(0)
-	}
-
-	return r0
-}
-
 // ExtendVote provides a mock function with given fields: _a0, _a1
 func (_m *AppConnConsensus) ExtendVote(_a0 context.Context, _a1 *types.RequestExtendVote) (*types.ResponseExtendVote, error) {
 	ret := _m.Called(_a0, _a1)
@@ -159,6 +99,58 @@ func (_m *AppConnConsensus) FinalizeBlock(_a0 context.Context, _a1 *types.Reques
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, *types.RequestFinalizeBlock) error); ok {
+		r1 = rf(_a0, _a1)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// GenerateFraudProof provides a mock function with given fields: _a0, _a1
+func (_m *AppConnConsensus) GenerateFraudProof(_a0 context.Context, _a1 *types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error) {
+	ret := _m.Called(_a0, _a1)
+
+	var r0 *types.ResponseGenerateFraudProof
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error)); ok {
+		return rf(_a0, _a1)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestGenerateFraudProof) *types.ResponseGenerateFraudProof); ok {
+		r0 = rf(_a0, _a1)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseGenerateFraudProof)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, *types.RequestGenerateFraudProof) error); ok {
+		r1 = rf(_a0, _a1)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// GetAppHash provides a mock function with given fields: _a0, _a1
+func (_m *AppConnConsensus) GetAppHash(_a0 context.Context, _a1 *types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
+	ret := _m.Called(_a0, _a1)
+
+	var r0 *types.ResponseGetAppHash
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestGetAppHash) (*types.ResponseGetAppHash, error)); ok {
+		return rf(_a0, _a1)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestGetAppHash) *types.ResponseGetAppHash); ok {
+		r0 = rf(_a0, _a1)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseGetAppHash)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, *types.RequestGetAppHash) error); ok {
 		r1 = rf(_a0, _a1)
 	} else {
 		r1 = ret.Error(1)
@@ -245,6 +237,32 @@ func (_m *AppConnConsensus) ProcessProposal(_a0 context.Context, _a1 *types.Requ
 	return r0, r1
 }
 
+// VerifyFraudProof provides a mock function with given fields: _a0, _a1
+func (_m *AppConnConsensus) VerifyFraudProof(_a0 context.Context, _a1 *types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error) {
+	ret := _m.Called(_a0, _a1)
+
+	var r0 *types.ResponseVerifyFraudProof
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error)); ok {
+		return rf(_a0, _a1)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestVerifyFraudProof) *types.ResponseVerifyFraudProof); ok {
+		r0 = rf(_a0, _a1)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseVerifyFraudProof)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, *types.RequestVerifyFraudProof) error); ok {
+		r1 = rf(_a0, _a1)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // VerifyVoteExtension provides a mock function with given fields: _a0, _a1
 func (_m *AppConnConsensus) VerifyVoteExtension(_a0 context.Context, _a1 *types.RequestVerifyVoteExtension) (*types.ResponseVerifyVoteExtension, error) {
 	ret := _m.Called(_a0, _a1)
@@ -264,29 +282,6 @@ func (_m *AppConnConsensus) VerifyVoteExtension(_a0 context.Context, _a1 *types.
 
 	if rf, ok := ret.Get(1).(func(context.Context, *types.RequestVerifyVoteExtension) error); ok {
 		r1 = rf(_a0, _a1)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
-}
-
-// VerifyFraudProofSync provides a mock function with given fields: _a0
-func (_m *AppConnConsensus) VerifyFraudProofSync(_a0 types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error) {
-	ret := _m.Called(_a0)
-
-	var r0 *types.ResponseVerifyFraudProof
-	if rf, ok := ret.Get(0).(func(types.RequestVerifyFraudProof) *types.ResponseVerifyFraudProof); ok {
-		r0 = rf(_a0)
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*types.ResponseVerifyFraudProof)
-		}
-	}
-
-	var r1 error
-	if rf, ok := ret.Get(1).(func(types.RequestVerifyFraudProof) error); ok {
-		r1 = rf(_a0)
 	} else {
 		r1 = ret.Error(1)
 	}

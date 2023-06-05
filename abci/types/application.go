@@ -18,6 +18,10 @@ type Application interface {
 	InitChain(context.Context, *RequestInitChain) (*ResponseInitChain, error) // Initialize blockchain w validators/other info from CometBFT
 	PrepareProposal(context.Context, *RequestPrepareProposal) (*ResponsePrepareProposal, error)
 	ProcessProposal(context.Context, *RequestProcessProposal) (*ResponseProcessProposal, error)
+	// Block methods for compatibility with the Fraud Proof API, Jun 5 2022
+	BeginBlock(context.Context, *RequestBeginBlock) (*ResponseBeginBlock, error) // Signals the beginning of a block
+	DeliverTx(context.Context, *RequestDeliverTx) (*ResponseDeliverTx, error)    // Deliver a tx for full processing
+	EndBlock(context.Context, *RequestEndBlock) (*ResponseEndBlock, error)       // Signals the end of a block, returns changes to the validator set
 	// Deliver the decided block with its txs to the Application
 	FinalizeBlock(context.Context, *RequestFinalizeBlock) (*ResponseFinalizeBlock, error)
 	// Create application specific vote extension
@@ -34,9 +38,9 @@ type Application interface {
 	ApplySnapshotChunk(context.Context, *RequestApplySnapshotChunk) (*ResponseApplySnapshotChunk, error) // Apply a shapshot chunk
 
 	// Fraud Proof Connection
-	GetAppHash(RequestGetAppHash) ResponseGetAppHash
-	GenerateFraudProof(RequestGenerateFraudProof) ResponseGenerateFraudProof // Generate Fraud Proof
-	VerifyFraudProof(RequestVerifyFraudProof) ResponseVerifyFraudProof       // Verifies a Fraud Proof
+	GetAppHash(context.Context, *RequestGetAppHash) (*ResponseGetAppHash, error)
+	GenerateFraudProof(context.Context, *RequestGenerateFraudProof) (*ResponseGenerateFraudProof, error) // Generate Fraud Proof
+	VerifyFraudProof(context.Context, *RequestVerifyFraudProof) (*ResponseVerifyFraudProof, error)       // Verifies a Fraud Proof
 }
 
 //-------------------------------------------------------
@@ -103,16 +107,16 @@ func (BaseApplication) ProcessProposal(context.Context, *RequestProcessProposal)
 	return &ResponseProcessProposal{Status: ResponseProcessProposal_ACCEPT}, nil
 }
 
-func (BaseApplication) GetAppHash(context.Context, req *RequestGetAppHash) (*ResponseGetAppHash, error) {
-	return ResponseGetAppHash{}
+func (BaseApplication) GetAppHash(context.Context, *RequestGetAppHash) (*ResponseGetAppHash, error) {
+	return &ResponseGetAppHash{}, nil
 }
 
-func (BaseApplication) GenerateFraudProof(context.Context, req *RequestGenerateFraudProof) (*ResponseGenerateFraudProof, error) {
-	return ResponseGenerateFraudProof{}
+func (BaseApplication) GenerateFraudProof(context.Context, *RequestGenerateFraudProof) (*ResponseGenerateFraudProof, error) {
+	return &ResponseGenerateFraudProof{}, nil
 }
 
-func (BaseApplication) VerifyFraudProof(context.Context, req *RequestVerifyFraudProof) (*ResponseVerifyFraudProof, error) {
-	return ResponseVerifyFraudProof{}
+func (BaseApplication) VerifyFraudProof(context.Context, *RequestVerifyFraudProof) (*ResponseVerifyFraudProof, error) {
+	return &ResponseVerifyFraudProof{}, nil
 }
 
 func (BaseApplication) ExtendVote(context.Context, *RequestExtendVote) (*ResponseExtendVote, error) {
@@ -133,4 +137,16 @@ func (BaseApplication) FinalizeBlock(_ context.Context, req *RequestFinalizeBloc
 	return &ResponseFinalizeBlock{
 		TxResults: txs,
 	}, nil
+}
+
+func (BaseApplication) BeginBlock(context.Context, *RequestBeginBlock) (*ResponseBeginBlock, error) {
+	return &ResponseBeginBlock{}, nil
+}
+
+func (BaseApplication) EndBlock(context.Context, *RequestEndBlock) (*ResponseEndBlock, error) {
+	return &ResponseEndBlock{}, nil
+}
+
+func (BaseApplication) DeliverTx(context.Context, *RequestDeliverTx) (*ResponseDeliverTx, error) {
+	return &ResponseDeliverTx{}, nil
 }

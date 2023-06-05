@@ -413,36 +413,69 @@ func (cli *socketClient) FinalizeBlock(ctx context.Context, req *types.RequestFi
 }
 
 func (cli *socketClient) GetAppHash(ctx context.Context, req *types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
-	reqres := cli.queueRequest(types.ToRequestGetAppHash(req))
+	reqres, err := cli.queueRequest(ctx, types.ToRequestGetAppHash(req))
 	if err != nil {
 		return nil, err
 	}
-	if err := cli.FlushSync(ctx); err != nil {
+	if err := cli.Flush(ctx); err != nil {
 		return nil, err
 	}
 	return reqres.Response.GetGetAppHash(), cli.Error()
 }
 
 func (cli *socketClient) GenerateFraudProof(ctx context.Context, req *types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error) {
-	reqres := cli.queueRequest(types.ToRequestGenerateFraudProof(req))
+	reqres, err := cli.queueRequest(ctx, types.ToRequestGenerateFraudProof(req))
 	if err != nil {
 		return nil, err
 	}
-	if err := cli.FlushSync(ctx); err != nil {
+	if err := cli.Flush(ctx); err != nil {
 		return nil, err
 	}
 	return reqres.Response.GetGenerateFraudProof(), cli.Error()
 }
 
 func (cli *socketClient) VerifyFraudProof(ctx context.Context, req *types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error) {
-	reqres := cli.queueRequest(types.ToRequestVerifyFraudProof(req))
+	reqres, err := cli.queueRequest(ctx, types.ToRequestVerifyFraudProof(req))
 	if err != nil {
 		return nil, err
 	}
-	if err := cli.FlushSync(ctx); err != nil {
+	if err := cli.Flush(ctx); err != nil {
 		return nil, err
 	}
 	return reqres.Response.GetVerifyFraudProof(), cli.Error()
+}
+
+func (cli *socketClient) BeginBlock(ctx context.Context, req *types.RequestBeginBlock) (*types.ResponseBeginBlock, error) {
+	reqres, err := cli.queueRequest(ctx, types.ToRequestBeginBlock(req))
+	if err != nil {
+		return nil, err
+	}
+	if err := cli.Flush(ctx); err != nil {
+		return nil, err
+	}
+	return reqres.Response.GetBeginBlock(), cli.Error()
+}
+
+func (cli *socketClient) DeliverTx(ctx context.Context, req *types.RequestDeliverTx) (*types.ResponseDeliverTx, error) {
+	reqres, err := cli.queueRequest(ctx, types.ToRequestDeliverTx(req))
+	if err != nil {
+		return nil, err
+	}
+	if err := cli.Flush(ctx); err != nil {
+		return nil, err
+	}
+	return reqres.Response.GetDeliverTx(), cli.Error()
+}
+
+func (cli *socketClient) EndBlock(ctx context.Context, req *types.RequestEndBlock) (*types.ResponseEndBlock, error) {
+	reqres, err := cli.queueRequest(ctx, types.ToRequestEndBlock(req))
+	if err != nil {
+		return nil, err
+	}
+	if err := cli.Flush(ctx); err != nil {
+		return nil, err
+	}
+	return reqres.Response.GetEndBlock(), cli.Error()
 }
 
 func (cli *socketClient) queueRequest(ctx context.Context, req *types.Request) (*ReqRes, error) {

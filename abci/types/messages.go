@@ -141,6 +141,24 @@ func ToRequestVerifyFraudProof(req *RequestVerifyFraudProof) *Request {
 	}
 }
 
+func ToRequestBeginBlock(req *RequestBeginBlock) *Request {
+	return &Request{
+		Value: &Request_BeginBlock{req},
+	}
+}
+
+func ToRequestEndBlock(req *RequestEndBlock) *Request {
+	return &Request{
+		Value: &Request_EndBlock{req},
+	}
+}
+
+func ToRequestDeliverTx(req *RequestDeliverTx) *Request {
+	return &Request{
+		Value: &Request_DeliverTx{req},
+	}
+}
+
 //----------------------------------------
 
 func ToResponseException(errStr string) *Response {

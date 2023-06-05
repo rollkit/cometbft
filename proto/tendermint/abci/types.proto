@@ -7,6 +7,7 @@ option go_package = "github.com/cometbft/cometbft/abci/types";
 // https://github.com/cosmos/gogoproto/blob/master/extensions.md
 import "tendermint/crypto/proof.proto";
 import "tendermint/crypto/keys.proto";
+import "tendermint/types/types.proto";
 import "tendermint/types/params.proto";
 import "tendermint/types/validator.proto";
 import "google/protobuf/timestamp.proto";
@@ -19,8 +20,11 @@ service ABCI {
   rpc Echo(RequestEcho) returns (ResponseEcho);
   rpc Flush(RequestFlush) returns (ResponseFlush);
   rpc Info(RequestInfo) returns (ResponseInfo);
+  rpc DeliverTx(RequestDeliverTx) returns (ResponseDeliverTx);
   rpc CheckTx(RequestCheckTx) returns (ResponseCheckTx);
   rpc Query(RequestQuery) returns (ResponseQuery);
+  rpc BeginBlock(RequestBeginBlock) returns (ResponseBeginBlock);
+  rpc EndBlock(RequestEndBlock) returns (ResponseEndBlock);
   rpc Commit(RequestCommit) returns (ResponseCommit);
   rpc InitChain(RequestInitChain) returns (ResponseInitChain);
   rpc ListSnapshots(RequestListSnapshots) returns (ResponseListSnapshots);
@@ -63,8 +67,11 @@ message Request {
     RequestGetAppHash          get_app_hash          = 21;
     RequestGenerateFraudProof  generate_fraud_proof  = 22;
     RequestVerifyFraudProof    verify_fraud_proof    = 23;
+    RequestBeginBlock          begin_block           = 7;
+    RequestDeliverTx           deliver_tx            = 9;
+    RequestEndBlock            end_block             = 10;
   }
-  reserved 4, 7, 9, 10;  // SetOption, BeginBlock, DeliverTx, EndBlock
+  reserved 4; // SetOption
 }
 
 message RequestEcho {
@@ -207,6 +214,20 @@ message RequestFinalizeBlock {
   bytes proposer_address = 8;
 }
 
+message RequestBeginBlock {
+  bytes                   hash                 = 1;
+  tendermint.types.Header header               = 2 [(gogoproto.nullable) = false];
+  CommitInfo              last_commit_info     = 3 [(gogoproto.nullable) = false];
+  repeated Misbehavior    byzantine_validators = 4 [(gogoproto.nullable) = false];
+}
+
+message RequestDeliverTx {
+  bytes tx = 1;
+}
+
+message RequestEndBlock {
+  int64 height = 1;
+}
 //----------------------------------------
 // Response types
 
@@ -232,8 +253,11 @@ message Response {
     ResponseGetAppHash          get_app_hash          = 22;
     ResponseGenerateFraudProof  generate_fraud_proof  = 23;
     ResponseVerifyFraudProof    verify_fraud_proof    = 24;
+    ResponseBeginBlock          begin_block           = 8;
+    ResponseDeliverTx           deliver_tx            = 10;
+    ResponseEndBlock            end_block             = 11;
   }
-  reserved 5, 8, 10, 11;  // SetOption, BeginBlock, DeliverTx, EndBlock
+  reserved 5;  // SetOption
 }
 
 // nondeterministic
@@ -392,6 +416,32 @@ message ResponseFinalizeBlock {
   tendermint.types.ConsensusParams consensus_param_updates = 4;
   // app_hash is the hash of the applications' state which is used to confirm that execution of the transactions was deterministic. It is up to the application to decide which algorithm to use.
   bytes app_hash = 5;
+}
+
+message ResponseBeginBlock {
+  repeated Event events = 1
+      [(gogoproto.nullable) = false, (gogoproto.jsontag) = "events,omitempty"];
+}
+
+message ResponseDeliverTx {
+  uint32         code       = 1;
+  bytes          data       = 2;
+  string         log        = 3;  // nondeterministic
+  string         info       = 4;  // nondeterministic
+  int64          gas_wanted = 5 [json_name = "gas_wanted"];
+  int64          gas_used   = 6 [json_name = "gas_used"];
+  repeated Event events     = 7 [
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag)  = "events,omitempty"
+  ];  // nondeterministic
+  string codespace = 8;
+}
+
+message ResponseEndBlock {
+  repeated ValidatorUpdate         validator_updates       = 1 [(gogoproto.nullable) = false];
+  tendermint.types.ConsensusParams consensus_param_updates = 2;
+  repeated Event                   events                  = 3
+      [(gogoproto.nullable) = false, (gogoproto.jsontag) = "events,omitempty"];
 }
 
 //----------------------------------------

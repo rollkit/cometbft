@@ -45,6 +45,32 @@ func (_m *Client) ApplySnapshotChunk(_a0 context.Context, _a1 *types.RequestAppl
 	return r0, r1
 }
 
+// BeginBlock provides a mock function with given fields: _a0, _a1
+func (_m *Client) BeginBlock(_a0 context.Context, _a1 *types.RequestBeginBlock) (*types.ResponseBeginBlock, error) {
+	ret := _m.Called(_a0, _a1)
+
+	var r0 *types.ResponseBeginBlock
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestBeginBlock) (*types.ResponseBeginBlock, error)); ok {
+		return rf(_a0, _a1)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestBeginBlock) *types.ResponseBeginBlock); ok {
+		r0 = rf(_a0, _a1)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseBeginBlock)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, *types.RequestBeginBlock) error); ok {
+		r1 = rf(_a0, _a1)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // CheckTx provides a mock function with given fields: _a0, _a1
 func (_m *Client) CheckTx(_a0 context.Context, _a1 *types.RequestCheckTx) (*types.ResponseCheckTx, error) {
 	ret := _m.Called(_a0, _a1)
@@ -123,6 +149,32 @@ func (_m *Client) Commit(_a0 context.Context, _a1 *types.RequestCommit) (*types.
 	return r0, r1
 }
 
+// DeliverTx provides a mock function with given fields: _a0, _a1
+func (_m *Client) DeliverTx(_a0 context.Context, _a1 *types.RequestDeliverTx) (*types.ResponseDeliverTx, error) {
+	ret := _m.Called(_a0, _a1)
+
+	var r0 *types.ResponseDeliverTx
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestDeliverTx) (*types.ResponseDeliverTx, error)); ok {
+		return rf(_a0, _a1)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestDeliverTx) *types.ResponseDeliverTx); ok {
+		r0 = rf(_a0, _a1)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseDeliverTx)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, *types.RequestDeliverTx) error); ok {
+		r1 = rf(_a0, _a1)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // Echo provides a mock function with given fields: _a0, _a1
 func (_m *Client) Echo(_a0 context.Context, _a1 string) (*types.ResponseEcho, error) {
 	ret := _m.Called(_a0, _a1)
@@ -141,6 +193,32 @@ func (_m *Client) Echo(_a0 context.Context, _a1 string) (*types.ResponseEcho, er
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string) error); ok {
+		r1 = rf(_a0, _a1)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// EndBlock provides a mock function with given fields: _a0, _a1
+func (_m *Client) EndBlock(_a0 context.Context, _a1 *types.RequestEndBlock) (*types.ResponseEndBlock, error) {
+	ret := _m.Called(_a0, _a1)
+
+	var r0 *types.ResponseEndBlock
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestEndBlock) (*types.ResponseEndBlock, error)); ok {
+		return rf(_a0, _a1)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestEndBlock) *types.ResponseEndBlock); ok {
+		r0 = rf(_a0, _a1)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseEndBlock)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, *types.RequestEndBlock) error); ok {
 		r1 = rf(_a0, _a1)
 	} else {
 		r1 = ret.Error(1)
@@ -227,6 +305,58 @@ func (_m *Client) Flush(_a0 context.Context) error {
 	}
 
 	return r0
+}
+
+// GenerateFraudProof provides a mock function with given fields: _a0, _a1
+func (_m *Client) GenerateFraudProof(_a0 context.Context, _a1 *types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error) {
+	ret := _m.Called(_a0, _a1)
+
+	var r0 *types.ResponseGenerateFraudProof
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error)); ok {
+		return rf(_a0, _a1)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestGenerateFraudProof) *types.ResponseGenerateFraudProof); ok {
+		r0 = rf(_a0, _a1)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseGenerateFraudProof)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, *types.RequestGenerateFraudProof) error); ok {
+		r1 = rf(_a0, _a1)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// GetAppHash provides a mock function with given fields: _a0, _a1
+func (_m *Client) GetAppHash(_a0 context.Context, _a1 *types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
+	ret := _m.Called(_a0, _a1)
+
+	var r0 *types.ResponseGetAppHash
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestGetAppHash) (*types.ResponseGetAppHash, error)); ok {
+		return rf(_a0, _a1)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestGetAppHash) *types.ResponseGetAppHash); ok {
+		r0 = rf(_a0, _a1)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseGetAppHash)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, *types.RequestGetAppHash) error); ok {
+		r1 = rf(_a0, _a1)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // Info provides a mock function with given fields: _a0, _a1
@@ -564,6 +694,32 @@ func (_m *Client) String() string {
 	}
 
 	return r0
+}
+
+// VerifyFraudProof provides a mock function with given fields: _a0, _a1
+func (_m *Client) VerifyFraudProof(_a0 context.Context, _a1 *types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error) {
+	ret := _m.Called(_a0, _a1)
+
+	var r0 *types.ResponseVerifyFraudProof
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error)); ok {
+		return rf(_a0, _a1)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, *types.RequestVerifyFraudProof) *types.ResponseVerifyFraudProof); ok {
+		r0 = rf(_a0, _a1)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*types.ResponseVerifyFraudProof)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, *types.RequestVerifyFraudProof) error); ok {
+		r1 = rf(_a0, _a1)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // VerifyVoteExtension provides a mock function with given fields: _a0, _a1

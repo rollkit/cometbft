@@ -112,20 +112,19 @@ func (app *appConnConsensus) Commit(ctx context.Context) (*types.ResponseCommit,
 	return app.appConn.Commit(ctx, &types.RequestCommit{})
 }
 
-func (app *appConnConsensus) GetAppHashSync(req types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
-	return app.appConn.GetAppHashSync(req)
+func (app *appConnConsensus) GetAppHash(ctx context.Context, req *types.RequestGetAppHash) (*types.ResponseGetAppHash, error) {
+	defer addTimeSample(app.metrics.MethodTimingSeconds.With("method", "get_app_hash", "type", "sync"))()
+	return app.appConn.GetAppHash(ctx, req)
 }
 
-func (app *appConnConsensus) GenerateFraudProofSync(
-	req types.RequestGenerateFraudProof,
-) (*types.ResponseGenerateFraudProof, error) {
-	return app.appConn.GenerateFraudProofSync(req)
+func (app *appConnConsensus) GenerateFraudProof(ctx context.Context, req *types.RequestGenerateFraudProof) (*types.ResponseGenerateFraudProof, error) {
+	defer addTimeSample(app.metrics.MethodTimingSeconds.With("method", "generate_fraud_proof", "type", "sync"))()
+	return app.appConn.GenerateFraudProof(ctx, req)
 }
 
-func (app *appConnConsensus) VerifyFraudProofSync(
-	req types.RequestVerifyFraudProof,
-) (*types.ResponseVerifyFraudProof, error) {
-	return app.appConn.VerifyFraudProofSync(req)
+func (app *appConnConsensus) VerifyFraudProof(ctx context.Context, req *types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error) {
+	defer addTimeSample(app.metrics.MethodTimingSeconds.With("method", "verify_fraud_proof", "type", "sync"))()
+	return app.appConn.VerifyFraudProof(ctx, req)
 }
 
 //------------------------------------------------

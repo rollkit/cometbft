@@ -257,3 +257,15 @@ func (cli *grpcClient) GenerateFraudProof(ctx context.Context, req *types.Reques
 func (cli *grpcClient) VerifyFraudProof(ctx context.Context, req *types.RequestVerifyFraudProof) (*types.ResponseVerifyFraudProof, error) {
 	return cli.client.VerifyFraudProof(ctx, types.ToRequestVerifyFraudProof(req).GetVerifyFraudProof(), grpc.WaitForReady(true))
 }
+
+func (cli *grpcClient) BeginBlock(ctx context.Context, req *types.RequestBeginBlock) (*types.ResponseBeginBlock, error) {
+	return cli.client.BeginBlock(ctx, types.ToRequestBeginBlock(req).GetBeginBlock(), grpc.WaitForReady(true))
+}
+
+func (cli *grpcClient) DeliverTx(ctx context.Context, req *types.RequestDeliverTx) (*types.ResponseDeliverTx, error) {
+	return cli.client.DeliverTx(ctx, types.ToRequestDeliverTx(req).GetDeliverTx(), grpc.WaitForReady(true))
+}
+
+func (cli *grpcClient) EndBlock(ctx context.Context, req *types.RequestEndBlock) (*types.ResponseEndBlock, error) {
+	return cli.client.EndBlock(ctx, types.ToRequestEndBlock(req).GetEndBlock(), grpc.WaitForReady(true))
+}
